@@ -100,9 +100,10 @@
 #DESIGN_CONFIG=./designs/ihp-sg13g2/gcd/config.mk
 #DESIGN_CONFIG=./designs/ihp-sg13g2/spi/config.mk
 #DESIGN_CONFIG=./designs/ihp-sg13g2/riscv32i/config.mk
+DESIGN_CONFIG ?= ./designs/nangate45/xiangshan/config.mk
 
 # Default design
-DESIGN_CONFIG ?= ./designs/nangate45/gcd/config.mk
+# DESIGN_CONFIG ?= ./designs/nangate45/gcd/config.mk
 
 # Include design and platform configuration before setting default options
 # in this file. This allows the DESIGN_CONFIG to set different defaults than
@@ -300,7 +301,7 @@ ifeq (,$(strip $(NUM_CORES)))
 endif
 export NUM_CORES
 
-YOSYS_FLAGS += -v 3
+YOSYS_FLAGS += -v 10 -t -g
 
 #-------------------------------------------------------------------------------
 # setup all commands used within this flow
