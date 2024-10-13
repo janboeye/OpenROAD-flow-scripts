@@ -20,15 +20,22 @@ if {[env_var_exists_and_non_empty VERILOG_INCLUDE_DIRS]} {
 }
 
 
-# Read verilog files
-foreach file $::env(VERILOG_FILES) {
-  if {[file extension $file] == ".rtlil"} {
-    read_rtlil $file
-  } elseif {[file extension $file] == ".json"} {
-    read_json $file
+set tempfile $::env(RESULTS_DIR)/tmp_yosys.rtlil
+if {[file exists $tempfile]} {
+	  puts "file exist"
+	  puts $tempfile
+	  read_rtlil $tempfile
   } else {
-    read_verilog -defer -sv {*}$vIdirsArgs $file
-  }
+	  # Read verilog files
+	  foreach file $::env(VERILOG_FILES) {
+		  if {[file extension $file] == ".rtlil"} {
+			  read_rtlil $file
+		  } elseif {[file extension $file] == ".json"} {
+			  read_json $file
+		  } else {
+			  read_verilog -defer -sv {*}$vIdirsArgs $file
+		  }
+	  }
 }
 
 
@@ -106,12 +113,24 @@ puts $constr "set_load $::env(ABC_LOAD_IN_FF)"
 close $constr
 
 proc synthesize_check {synth_args} {
-  # Generic synthesis
-  log_cmd synth -top $::env(DESIGN_NAME) -run :fine {*}$synth_args
-  json -o $::env(RESULTS_DIR)/mem.json
-  # Run report and check here so as to fail early if this synthesis run is doomed
-  exec -- python3 $::env(SCRIPTS_DIR)/mem_dump.py --max-bits $::env(SYNTH_MEMORY_MAX_BITS) $::env(RESULTS_DIR)/mem.json
-  log_cmd synth -top $::env(DESIGN_NAME) -run fine: {*}$synth_args
-  # Get rid of indigestibles
-  chformal -remove
+  puts "synthesize check"
+  set tempfile $::env(RESULTS_DIR)/tmp_yosys.rtlil
+  if {[file exists $tempfile]} {
+	  puts "file exist"
+	  log_cmd synth -top $::env(DESIGN_NAME) -run fine: {*}$synth_args
+	  # Get rid of indigestibles
+	  chformal -remove 
+  } else {
+	  puts "file not exist"
+	  # Generic synthesis
+	  log_cmd synth -top $::env(DESIGN_NAME) -run :fine {*}$synth_args
+	  write_rtlil $::env(RESULTS_DIR)/tmp_yosys.rtlil
+	  puts "write out tmp_yosys.v"
+	  json -o $::env(RESULTS_DIR)/mem.json
+	  # Run report and check here so as to fail early if this synthesis run is doomed
+	  exec -- python3 $::env(SCRIPTS_DIR)/mem_dump.py --max-bits $::env(SYNTH_MEMORY_MAX_BITS) $::env(RESULTS_DIR)/mem.json
+	  log_cmd synth -top $::env(DESIGN_NAME) -run fine: {*}$synth_args
+	  # Get rid of indigestibles
+	  chformal -remove 
+  }
 }
