@@ -20,7 +20,7 @@ module array_16 (
     genvar i;
     generate
         for (i = 0; i < 16; i = i + 1) begin : wmask_expansion
-            assign expanded_wmask[i*486 +: 486] = {486{RW0_wmask[i]}};
+            assign expanded_wmask[i*486 +: 486] = RW0_wmask[i]? {486{1'b1}}:{486{1'b0}};
         end
     endgenerate
 

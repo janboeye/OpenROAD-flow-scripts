@@ -18,9 +18,9 @@ module array_22 (
 	wire [95:0] expanded_wmask;
 	genvar i;
 	generate
-	for (i = 0; i < 16; i = i + 1) begin : wmask_expansion
-	assign expanded_wmask[i*6 +: 6] = {6{RW0_wmask[i]}};
-end
+		for (i = 0; i < 16; i = i + 1) begin : wmask_expansion
+			assign expanded_wmask[i*6 +: 6] = RW0_wmask[i]? {6{1'b1}}:{6{1'b0}};
+		end
 	endgenerate
 	sram_96x4096_1rw array_22_ext(
 			.addr_in(RW0_addr),

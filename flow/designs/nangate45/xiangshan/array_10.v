@@ -18,9 +18,9 @@ module array_10 (
 	wire [2847:0] expanded_wmask;
 	genvar i;
 	generate
-	for (i = 0; i < 8; i = i + 1) begin : wmask_expansion
-	assign expanded_wmask[i*356 +: 356] = {356{RW0_wmask[i]}};
-end
+		for (i = 0; i < 8; i = i + 1) begin : wmask_expansion
+			assign expanded_wmask[i*356 +: 356] = RW0_wmask[i]? {356{1'b1}}:{356{1'b0}};
+		end
 	endgenerate
 	sram_2848x32_1rw array_22_ext(
 			.addr_in(RW0_addr),
