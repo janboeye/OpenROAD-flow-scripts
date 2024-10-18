@@ -12,7 +12,7 @@ module array_0_7 (
 	input RW0_wmode;
 	input [14:0] RW0_wdata;
 	output wire [14:0] RW0_rdata;
-	sram_15x4096_1rw array_0_6_ext(
+	sram_15x4096_1rw array_0_7_ext(
 		.addr_in(RW0_addr),
 		.ce_in(RW0_en),
 		.clk(RW0_clk),

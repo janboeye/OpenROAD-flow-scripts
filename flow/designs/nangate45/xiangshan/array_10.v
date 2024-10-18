@@ -22,7 +22,7 @@ module array_10 (
 			assign expanded_wmask[i*356 +: 356] = RW0_wmask[i]? {356{1'b1}}:{356{1'b0}};
 		end
 	endgenerate
-	sram_2848x32_1rw array_22_ext(
+	sram_2848x32_1rw array_10_ext(
 			.addr_in(RW0_addr),
 			.ce_in(RW0_en),
 			.clk(RW0_clk),

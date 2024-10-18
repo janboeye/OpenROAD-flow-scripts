@@ -31,4 +31,30 @@ module array_22 (
 			.rd_out(RW0_rdata),
 			.w_mask_in(expanded_wmask)
 			);
+//	sram_96x4096_1rw array_22_ext(
+//			.addr_in(RW0_addr),
+//			.ce_in(RW0_en),
+//			.clk(RW0_clk),
+//			.we_in(RW0_wmode),
+//			.wd_in(RW0_wdata),
+//			.rd_out(RW0_rdata),
+//			.w_mask_in({
+//			         {6{RW0_wmask[15]}}
+//				,{6{RW0_wmask[14]}}
+//				,{6{RW0_wmask[13]}}
+//				,{6{RW0_wmask[12]}}
+//				,{6{RW0_wmask[11]}}
+//				,{6{RW0_wmask[10]}}
+//				,{6{RW0_wmask[9]}}
+//				,{6{RW0_wmask[8]}}
+//				,{6{RW0_wmask[7]}}
+//				,{6{RW0_wmask[6]}}
+//				,{6{RW0_wmask[5]}}
+//				,{6{RW0_wmask[4]}}
+//				,{6{RW0_wmask[3]}}
+//				,{6{RW0_wmask[2]}}
+//				,{6{RW0_wmask[1]}}
+//				,{6{RW0_wmask[0]}}
+//				}
+//			));
 endmodule
