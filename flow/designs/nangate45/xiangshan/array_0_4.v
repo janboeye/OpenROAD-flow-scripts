@@ -19,6 +19,6 @@ module array_0_4 (
 		.wd_in(RW0_wdata),
 		.rd_out(RW0_rdata),
 		.we_in(RW0_wmode),
-		.w_mask_in({512{RW0_wmode}})
+		.w_mask_in({512{1'b1}})
 	);
 endmodule
