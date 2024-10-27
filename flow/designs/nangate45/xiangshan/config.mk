@@ -22,7 +22,8 @@ export ADDITIONAL_LIBS = $(sort $(wildcard ./designs/$(PLATFORM)/$(DESIGN_NICKNA
 
 export SYNTH_MEMORY_MAX_BITS = 7962624
 export SYNTH_ARGS =
-export FLOW_VARIANT = three
+export FLOW_VARIANT = four
+export RTLMP_FLOW = 1
 
 export CORE_UTILIZATION = 40
 export CORE_ASPECT_RATIO = 1
